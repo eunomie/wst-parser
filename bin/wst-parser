@@ -1,0 +1,16 @@
+#!/usr/bin/env ruby
+
+require 'wst/parser'
+
+dir = ARGV[0] || Dir.pwd
+
+Wst::Configuration.read_config dir, false
+
+puts "Pages:"
+Wst::Page.all.each do |page|
+	puts "\t" + page.content_url
+end
+puts "Posts:"
+Wst::Post.all.each do |post|
+	puts "\t" + post.content_url
+end
