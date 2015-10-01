@@ -84,6 +84,22 @@ module Wst
         (xml_pages + haml_pages + md_pages).sort
       end
 
+      # param [String] file_path Relative path of the file to save
+      # param [Hash] datas Header datas
+      # param [String] content Content to write
+      def save! file_path, datas, content
+        Content.save! file_path, datas, content
+        page = nil
+        if file_path =~ XmlPage.matcher
+          page = XmlPage.new file_path
+        elsif file_path =~ HamlPage.matcher
+          page = HamlPage.new file_path
+        elsif file_path =~ MdPage.matcher
+          page = MdPage.new file_path
+        end
+        page
+      end
+
       private
 
       def xml_pages

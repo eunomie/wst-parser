@@ -7,6 +7,20 @@ module Wst
   class Content
     include Configuration
 
+    class << self
+      # param [String] file_path Relative path of the file to save
+      # param [Hash] datas Header datas
+      # param [String] content Content to write
+      def save! file_path, datas, content
+        File.open(file_path, "w") do |file|
+          file.write datas.to_yaml
+          file.write "---\n"
+          file.write "\n"
+          file.write content
+        end
+      end
+    end
+
     def initialize file_path, child = nil
       @file_path = file_path
       @plain_content = ""
