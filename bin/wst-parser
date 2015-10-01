@@ -6,11 +6,8 @@ dir = ARGV[0] || Dir.pwd
 
 Wst::Configuration.read_config dir, false
 
-puts "Pages:"
-Wst::Page.all.each do |page|
-	puts "\t" + page.content_url
-end
-puts "Posts:"
-Wst::Post.all.each do |post|
-	puts "\t" + post.content_url
+puts "All contents:"
+contents = Wst::Contents.new
+contents.all(true).each do |content|
+	puts " - #{content.content_url}"
 end
