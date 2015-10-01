@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    wst-parser (0.1.0)
+    wst-parser (0.2.1)
 
 GEM
   remote: https://rubygems.org/
@@ -12,3 +12,6 @@ PLATFORMS
 
 DEPENDENCIES
   wst-parser!
+
+BUNDLED WITH
+   1.10.6
