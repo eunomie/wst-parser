@@ -10,10 +10,34 @@ module Wst
     end
   end
 
+  class XmlPage < HamlContent
+    include PageComparison
+
+    @@matcher = /^(.+\/)*(.*)(\.xml\.haml)$/
+
+    def initialize file_path
+      super file_path
+
+      m, cats, slug, ext = *file_path.match(@@matcher)
+      base_path = File.join(Configuration.config['path'], '_pages') + '/'
+      @cats = cats.gsub(base_path, '').chomp('/') if !cats.nil? && cats != base_path
+      @slug = slug
+      @ext = ext
+    end
+
+    def content_url
+      "#{@cats + '/' if @cats != ''}#{CGI.escape @slug}.xml"
+    end
+
+    def self.matcher
+      @@matcher
+    end
+  end
+
   class HamlPage < HamlContent
     include PageComparison
 
-    @@matcher = /^(.+\/)*(.*)(\.[^.]+)$/
+    @@matcher = /^(.+\/)*(.*)((?<!\.xml)\.[^.]+)$/
 
     def initialize file_path
       super file_path
@@ -51,15 +75,20 @@ module Wst
   end
 
   class Page
+    @@glob_xml = '*.xml.haml'
     @@glob_md = '*.{md,mkd,markdown}'
     @@glob_haml = '*.haml'
 
     class << self
       def all
-        (haml_pages + md_pages).sort
+        (xml_pages + haml_pages + md_pages).sort
       end
 
       private
+
+      def xml_pages
+        page_files(@@glob_xml, XmlPage.matcher).inject([]) { |pages, file| pages << XmlPage.new(file) }
+      end
 
       def haml_pages
         page_files(@@glob_haml, HamlPage.matcher).inject([]) { |pages, file| pages << HamlPage.new(file) }
