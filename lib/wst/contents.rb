@@ -11,7 +11,7 @@ module Wst
     # Get all contents
     # @param [Boolean] show_non_publised Get all contents or only published
     # @return [Array<Content>] Contents
-    def all(show_non_published)
+    def all(show_non_published = false)
       return @all if show_non_published
       @all.select { |c| c.published }
     end
