@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
 	s.name = 'wst-parser'
-	s.version = '0.3.0'
+	s.version = '0.3.1'
 	s.date = '2015-10-01'
 	s.summary = 'Web Site Today Parser'
 	s.description = 'Parse content of a wst instance'
