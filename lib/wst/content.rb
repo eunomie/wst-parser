@@ -2,6 +2,7 @@
 require 'yaml'
 require 'wst/configuration'
 require 'digest/md5'
+require 'fileutils'
 
 module Wst
   class Content
@@ -12,6 +13,7 @@ module Wst
       # param [Hash] datas Header datas
       # param [String] content Content to write
       def save! file_path, datas, content
+        FileUtils.mkdir_p File.dirname file_path
         File.open(file_path, "w") do |file|
           file.write datas.to_yaml
           file.write "---\n"
