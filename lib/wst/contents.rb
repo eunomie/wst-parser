@@ -5,6 +5,10 @@ require 'wst/page'
 module Wst
   class Contents
     def initialize
+      refresh
+    end
+
+    def refresh
       @posts = Post.all
       @pages = Page.all
       @all = [@posts, @pages].flatten
